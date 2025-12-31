@@ -9,8 +9,8 @@
         margin: 0;
         font-family: Arial, Helvetica, sans-serif;
         background: #ffd6e8;
-        overflow: hidden;
-        height: 100vh; /* Asegura altura completa */
+        /* IMPORTANTE: Quitamos el 'overflow: hidden' del body para evitar bloqueos */
+        height: 100vh;
     }
 
     .heart {
@@ -33,13 +33,12 @@
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
-        width: 90%; /* Ajuste para celular */
-        max-width: 700px;
+        width: 85%; /* Ajustado para móviles */
+        max-width: 600px;
         background: rgba(255,255,255,0.75);
-        padding: 40px;
+        padding: 30px;
         border-radius: 12px;
         box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        box-sizing: border-box; /* Para que el padding no desborde */
         z-index: 10;
     }
 
@@ -54,65 +53,58 @@
         color: white;
     }
 
+    /* PANTALLA DE FOTOS */
     .photo-screen {
         display: none;
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         background: black;
         justify-content: center;
         align-items: center;
-        text-align: center;
         z-index: 20;
     }
 
     .photo-screen img {
         max-width: 95%;
         max-height: 95%;
-        object-fit: contain; /* Evita que la foto se estire feo */
+        object-fit: contain;
     }
 
+    /* PANTALLA FINAL - SOLUCIÓN PARA QUE NO SE CORTE */
     .final-message {
-        display: none; /* Se cambia a flex con JS */
+        display: none; 
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         background: black;
         color: #fff;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
         z-index: 30;
-    }
-
-    /* Aquí está la solución para el iPhone */
-    .final-box {
-        background: rgba(255,255,255,0.85);
-        color: #333;
-        padding: 30px;
-        border-radius: 12px;
-        width: 85%; /* Ancho responsivo */
-        max-width: 700px;
-        font-size: 18px;
-        line-height: 1.6;
         
-        /* Propiedades mágicas para el scroll */
-        max-height: 80vh; /* Altura máxima del 80% de la pantalla */
-        overflow-y: auto; /* Permite deslizar si el texto es muy largo */
-        margin: auto;
+        /* ESTO PERMITE HACER SCROLL (BAJAR CON EL DEDO) */
+        overflow-y: scroll; 
     }
 
-    /* Ajuste de texto para pantallas pequeñas */
-    @media (max-width: 480px) {
-        .final-box {
-            font-size: 16px;
-            padding: 20px;
-        }
+    .final-box {
+        background: rgba(255,255,255,0.9);
+        color: #333;
+        padding: 25px;
+        border-radius: 12px;
+        max-width: 600px;
+        font-size: 16px; 
+        line-height: 1.5;
+        text-align: center;
+        
+        /* ESTO LO CENTRA PERO DEJA ESPACIO PARA BAJAR */
+        margin: 40px auto; 
+        width: 85%;
+        position: relative;
     }
+
 </style>
 </head>
 <body>
@@ -196,7 +188,8 @@ function showNextPhoto() {
 
 function showFinalMessage() {
     document.getElementById("photoScreen").style.display = "none";
-    document.getElementById("finalMessage").style.display = "flex";
+    // Cambié esto a 'block' para que funcione el scroll correctamente
+    document.getElementById("finalMessage").style.display = "block";
 }
 
 function volverInicio() {
